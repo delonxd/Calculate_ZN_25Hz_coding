@@ -34,7 +34,7 @@ def main_cal(path1, path2, path3):
     dict0 = init_input_ZN_25Hz_coding_mix_test()
     df_input = config_loop_df_test(dict0)
 
-    # print(df_input)
+    print(df_input.shape[0])
 
     #################################################################################
 
@@ -75,12 +75,12 @@ def main_cal(path1, path2, path3):
     para['Ccmp_z_change_zhu'] = ImpedanceMultiFreq()
     para['Ccmp_z_change_chuan'] = ImpedanceMultiFreq()
 
-    para['TB_引接线_有砟'] = ImpedanceMultiFreq()
-    para['TB_引接线_有砟'].z = {
-        1700: (8.33 + 31.4j)*1e-3,
-        2000: (10.11 + 35.2j)*1e-3,
-        2300: (11.88 + 39.0j)*1e-3,
-        2600: (13.60 + 42.6j)*1e-3}
+    # para['TB_引接线_有砟'] = ImpedanceMultiFreq()
+    # para['TB_引接线_有砟'].z = {
+    #     1700: (8.33 + 31.4j)*1e-3,
+    #     2000: (10.11 + 35.2j)*1e-3,
+    #     2300: (11.88 + 39.0j)*1e-3,
+    #     2600: (13.60 + 42.6j)*1e-3}
 
     # z_tb_2600_2000 = para['TB'][2600][2000].z
 
@@ -145,19 +145,18 @@ def main_cal(path1, path2, path3):
         # 序号
         row_data.config_number(counter, pd_read_flag=flag)
 
-        # 备注
-        # row_data.config_remarks('主分路被调整', pd_read_flag=False)
         row_data.config_remarks('无', pd_read_flag=flag)
 
         row_data.config_sec_name('I', 'II', pd_read_flag=flag)
 
         row_data.config_sec_length(500, 500, pd_read_flag=flag)
-        # row_data.config_offset(0, pd_read_flag=False)
+
         row_data.config_offset(0, pd_read_flag=flag)
 
         row_data.config_mutual_coeff(24, pd_read_flag=flag)
+
         row_data.config_freq(2300, 1700, pd_read_flag=flag)
-        # row_data.config_freq(cv1, cv2, pd_read_flag=flag)
+
         row_data.config_c_num(7, 7, pd_read_flag=flag)
 
         # row_data.config_c_posi(None, None, pd_read_flag=False)
@@ -171,26 +170,14 @@ def main_cal(path1, path2, path3):
         # row_data.config_c_fault_mode('无', cv2, pd_read_flag=flag)
         # row_data.config_c_fault_num([], cv3, pd_read_flag=flag)
 
-        # row_data.config_c_fault_mode(['无'], ['无'], pd_read_flag=flag)
-        # row_data.config_c_fault_num([], [], pd_read_flag=flag)
-        # row_data.config_c_fault_mode(['无'], ['无'], pd_read_flag=False)
-        # row_data.config_c_fault_num([], [], pd_read_flag=False)
-
         row_data.config_rd(10000, 10000, pd_read_flag=flag, respectively=True)
 
-        # row_data.config_trk_z(pd_read_flag=flag, respectively=False)
-        # row_data.config_trk_z(pd_read_flag=flag, respectively=True)
-        # row_data.config_trk_z(pd_read_flag=False, respectively=True)
         row_data.config_trk_z(pd_read_flag=False, respectively=False)
 
         # TB模式
         # row_data.config_TB_mode('无TB', pd_read_flag=False)
-        # row_data.config_TB_mode('双端TB', pd_read_flag=flag)
-        # row_data.config_TB_mode('双端TB', pd_read_flag=False)
 
-        # row_data.config_sr_mode('右发', '右发', pd_read_flag=False)
-        row_data.config_sr_mode('右发', '右发', pd_read_flag=False)
-        # row_data.config_sr_mode('', '', pd_read_flag=True)
+        row_data.config_sr_mode('右发', '右发', pd_read_flag=flag)
 
         # row_data.config_pop([], [], pd_read_flag=False)
         # if temp_temp == 1:
@@ -200,16 +187,18 @@ def main_cal(path1, path2, path3):
 
         row_data.config_cable_para()
         row_data.config_cable_length(10, 10, pd_read_flag=flag, respectively=True)
+
         # row_data.config_r_sht(1e-7, 1e-7, pd_read_flag=flag, respectively=True)
         row_data.config_r_sht(1e-7, 1e-7, pd_read_flag=flag, respectively=True)
+
         row_data.config_power(5, '最大', pd_read_flag=flag)
 
         row_data.config_sp_posi()
         # row_data.config_train_signal()
         # row_data.config_error()
 
-        # interval = row_data.config_interval(1, pd_read_flag=flag)
-        interval = row_data.config_interval(1, pd_read_flag=False)
+        interval = row_data.config_interval(1, pd_read_flag=flag)
+        # interval = row_data.config_interval(1, pd_read_flag=False)
 
         # if data['被串故障模式'] is None:
         #     print(para['freq_被'], para['被串故障模式'])
@@ -444,16 +433,17 @@ def main_cal(path1, path2, path3):
             columns_max = len_posi
 
         i_trk_list = data2excel.data_dict["被串钢轨电流"][-1]
-        i_sht_list = data2excel.data_dict["被串分路电流"][-1]
+        # i_sht_list = data2excel.data_dict["被串分路电流"][-1]
 
         # i_sht_list_zhu = data2excel.data_dict["主串分路电流"][-1]
 
         data['被串最大干扰电流(A)'] = max(i_trk_list)
+        data['被串最大干扰电流(mA)'] = data['被串最大干扰电流(A)'] * 1000
         # data['主串出口电流(A)'] = i_sht_list_zhu[0]
         # data['主串入口电流(A)'] = i_sht_list_zhu[-1]
         data['被串最大干扰位置(m)'] = round(i_trk_list.index(max(i_trk_list))*interval)
         max_i = data['被串最大干扰电流(A)'] * 1000
-        MAX_I = para['MAX_CURRENT'][data['主串频率(Hz)']]
+        # MAX_I = para['MAX_CURRENT'][data['主串频率(Hz)']]
 
         print(max_i)
 

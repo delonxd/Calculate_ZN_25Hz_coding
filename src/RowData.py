@@ -163,7 +163,7 @@ class RowData:
 
         if pd_read_flag:
             data['主串电容(不含TB)位置'] = para['主串电容位置'] = df_input['主串电容(不含TB)位置']
-            data['被串电容(不含TB)位置'] = para['被串电容位置'] = df_input['主串电容(不含TB)位置']
+            data['被串电容(不含TB)位置'] = para['被串电容位置'] = df_input['被串电容(不含TB)位置']
         else:
             data['主串电容(不含TB)位置'] = para['主串电容位置'] = c_pst_zhu
             data['被串电容(不含TB)位置'] = para['被串电容位置'] = c_pst_bei
@@ -409,17 +409,14 @@ class RowData:
                 data['钢轨电阻(Ω/km)'] = round(para['Trk_z'].rlc_s[freq][0], 10)
                 data['钢轨电感(H/km)'] = round(para['Trk_z'].rlc_s[freq][1], 10)
 
-            para['主串钢轨阻抗'] = para['Trk_z']
-            para['被串钢轨阻抗'] = para['Trk_z']
-
-        if para['主串钢轨阻抗'][freq].z == 0:
-            para['主串钢轨阻抗'] = para['Trk_z']
-            data['主串钢轨电阻'] = round(para['Trk_z'].rlc_s[freq][0], 10)
-            data['主串钢轨电感'] = round(para['Trk_z'].rlc_s[freq][1], 10)
-        if para['被串钢轨阻抗'][freq].z == 0:
-            para['被串钢轨阻抗'] = para['Trk_z']
-            data['被串钢轨电阻'] = round(para['Trk_z'].rlc_s[freq][0], 10)
-            data['被串钢轨电感'] = round(para['Trk_z'].rlc_s[freq][1], 10)
+        # if para['主串钢轨阻抗'][freq].z == 0:
+        #     para['主串钢轨阻抗'] = para['Trk_z']
+        #     data['主串钢轨电阻'] = round(para['Trk_z'].rlc_s[freq][0], 10)
+        #     data['主串钢轨电感'] = round(para['Trk_z'].rlc_s[freq][1], 10)
+        # if para['被串钢轨阻抗'][freq].z == 0:
+        #     para['被串钢轨阻抗'] = para['Trk_z']
+        #     data['被串钢轨电阻'] = round(para['Trk_z'].rlc_s[freq][0], 10)
+        #     data['被串钢轨电感'] = round(para['Trk_z'].rlc_s[freq][1], 10)
 
     #################################################################################
 
@@ -593,8 +590,8 @@ class RowData:
             data['主串电平级'] = para['send_level'] = send_level
 
         if pd_read_flag:
-            # data['电源电压'] = para['pwr_v_flg'] = df_input['电源电压']
-            data['电源电压'] = para['pwr_v_flg'] = '最大'
+            data['电源电压'] = para['pwr_v_flg'] = df_input['电源电压']
+            # data['电源电压'] = para['pwr_v_flg'] = '最大'
         else:
             data['电源电压'] = para['pwr_v_flg'] = v_power
 

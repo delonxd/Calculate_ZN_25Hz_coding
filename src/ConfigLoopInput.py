@@ -139,6 +139,7 @@ def init_input_ZN_25Hz_coding_mix():
         'BE-Rm(Ω)': [110],
         'BE-Lm(H)': [0.024],
     }
+
     return ret
 
 
@@ -202,8 +203,10 @@ if __name__ == '__main__':
     pd.set_option('display.max_rows', None)
     pd.set_option('display.width', 100000)
 
-    d0 = init_input_ZN_25Hz_coding_mix_test()
+    # d0 = init_input_ZN_25Hz_coding_mix()
     # s1 = config_loop_df(d0)
+
+    d0 = init_input_ZN_25Hz_coding_mix_test()
     s1 = config_loop_df_test(d0)
 
     print(s1)
