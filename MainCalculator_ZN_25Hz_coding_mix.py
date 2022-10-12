@@ -8,6 +8,7 @@ from src.ConfigHeadList import *
 from src.Data2Excel import *
 from src.RowData import RowData
 from src.ConfigLoopInput import *
+from src.logMethod import MainLog
 
 import pandas as pd
 import time
@@ -28,12 +29,13 @@ def main_cal(path1, path2, path3):
     # df_input = pd.read_excel(path1)
     # df_input = df_input.where(df_input.notnull(), None)
 
-    # dict0 = init_input_ZN_25Hz_coding_mix()
-    # df_input = config_loop_df(dict0)
+    dict0 = init_input_ZN_25Hz_coding_mix()
+    df_input = config_loop_df(dict0)
 
-    dict0 = init_input_ZN_25Hz_coding_mix_test()
-    df_input = config_loop_df_test(dict0)
+    # dict0 = init_input_ZN_25Hz_coding_mix_test()
+    # df_input = config_loop_df_test(dict0)
 
+    # print(df_input)
     print(df_input.shape[0])
 
     #################################################################################
@@ -121,7 +123,8 @@ def main_cal(path1, path2, path3):
         # if getattr(sys, 'frozen', False):
         #     print(df_input[temp_temp:(temp_temp + 1)])
         # print(temp_temp)
-        print('calculating line ' + str(counter) + ' ...')
+        # print('calculating line ' + str(counter) + ' ...')
+        MainLog.add_log('row ' + str(counter) + ' ...')
 
         #################################################################################
 
@@ -442,10 +445,11 @@ def main_cal(path1, path2, path3):
         # data['主串出口电流(A)'] = i_sht_list_zhu[0]
         # data['主串入口电流(A)'] = i_sht_list_zhu[-1]
         data['被串最大干扰位置(m)'] = round(i_trk_list.index(max(i_trk_list))*interval)
-        max_i = data['被串最大干扰电流(A)'] * 1000
+        # max_i = data['被串最大干扰电流(A)'] * 1000
         # MAX_I = para['MAX_CURRENT'][data['主串频率(Hz)']]
 
-        print(max_i)
+        MainLog.add_log('max --> %s(mA)' % data['被串最大干扰电流(mA)'])
+        MainLog.add_split('-')
 
         # if max_i > MAX_I:
         #     text = '干扰频率：' + str(data['主串频率(Hz)']) + 'Hz，'\
